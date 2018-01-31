@@ -11,6 +11,8 @@ public class Tests {
     public static String APPLICATION_CONTEXT_XML_FILE_NAME =
             "application-context.xml";
 
+
+
     public static UsualPerson getExpectedPerson() {
         return new UsualPerson(
                 1,
@@ -21,6 +23,8 @@ public class Tests {
 
                 Arrays.asList(
                         new SimpleContact("TELEPHONE", "222-33-22"),
-                        new SimpleContact("EMAIL","jkhafg@kjhsd.ru")));
+                        new SimpleContact("EMAIL","jkhafg@kjhsd.ru")),
+                1.78f,
+                true);
     }
 }

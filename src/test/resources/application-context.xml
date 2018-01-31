@@ -2,6 +2,7 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:c="http://www.springframework.org/schema/c"
+       xmlns:p="http://www.springframework.org/schema/p"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
@@ -12,41 +13,20 @@
           c:lastName="Smith"
           c:country-ref="country"
           c:age="35"
+          c:height="1.78"
+          c:isProgrammer="true"
           c:contacts-ref="contacts"/>
 
-<<<<<<< HEAD
-    <bean id="person" class="lab.model.UsualPerson">
-        <constructor-arg name="id" value="1"/>
-        <constructor-arg name="name" value="John Smith"/>
-        <constructor-arg name="country" ref="country"/>
-        <constructor-arg name="age" value="35"/>
-        <constructor-arg name="height" value="1.78"/>
-        <constructor-arg name="isProgrammer" value="true"/>
-        <constructor-arg name="contacts" ref="contacts"/>
-    </bean>
-=======
     <bean id="country" class="lab.model.SimpleCountry"
           c:id="1"
           c:name="Russia"
           c:codeName="RU"/>
->>>>>>> upstream/master
 
     <util:list id="contacts" value-type="lab.model.Contact">
         <bean class="lab.model.SimpleContact"
               c:type="TELEPHONE" c:value="222-33-22"/>
         <bean class="lab.model.SimpleContact"
-            c:type="EMAIL" c:value="jkhafg@kjhsd.ru"/>
+              c:type="EMAIL" c:value="jkhafg@kjhsd.ru"/>
     </util:list>
 
-<<<<<<< HEAD
-    <util:list id="contacts" value-type="java.lang.String">
-        <bean class="java.lang.String">
-            <constructor-arg value="222-33-22"/>
-        </bean>
-        <bean class="java.lang.String">
-            <constructor-arg value="jkhafg@kjhsd.ru"/>
-        </bean>
-    </util:list>
-=======
->>>>>>> upstream/master
 </beans>
