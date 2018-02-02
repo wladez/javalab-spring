@@ -1,7 +1,6 @@
 package lab.model;
 
 import lombok.Value;
-import org.springframework.stereotype.Component;
 
 @Value
 public class SimpleCountry implements Country {

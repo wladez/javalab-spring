@@ -15,5 +15,6 @@ public class UsualPerson implements Person {
     private int age;
     private float height;
     private boolean isProgrammer;
+    private boolean isBroke;
     private List contacts;
 }
