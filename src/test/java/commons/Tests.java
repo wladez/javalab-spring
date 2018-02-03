@@ -19,13 +19,7 @@ public interface Tests {
 
     String APPLICATION_CONTEXT_XML_FILE_NAME = "ioc.xml";
 
-<<<<<<< HEAD
-
-
-    public static UsualPerson getExpectedPerson() {
-=======
     static Person getExpectedPerson() {
->>>>>>> upstream/master
         return new UsualPerson(
                 1,
                 "John",
@@ -34,14 +28,9 @@ public interface Tests {
                 35,
                 1.78f,
                 true,
-                false,
+                true,
                 Arrays.asList(
                         new SimpleContact("TELEPHONE", "222-33-22"),
-<<<<<<< HEAD
-                        new SimpleContact("EMAIL","jkhafg@kjhsd.ru")),
-                1.78f,
-                true);
-=======
                         new SimpleContact("EMAIL", "jkhafg@kjhsd.ru")));
     }
 
@@ -89,6 +78,5 @@ public interface Tests {
 //        if (!brokeField.canAccess(person))
         brokeField.setAccessible(true);
         brokeField.set(o, broke);
->>>>>>> upstream/master
     }
 }

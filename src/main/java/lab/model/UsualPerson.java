@@ -13,14 +13,8 @@ public class UsualPerson implements Person {
     private String lastName;
     private Country country;
     private int age;
-<<<<<<< HEAD
-    private List<Contact> contacts;
-    private float height;
-    private boolean isProgrammer;
-=======
     private float height;
     private boolean isProgrammer;
     private boolean isBroke;
     private List contacts;
->>>>>>> upstream/master
 }
