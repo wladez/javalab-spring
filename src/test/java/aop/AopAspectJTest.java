@@ -27,19 +27,19 @@ class AopAspectJTest {
     private String out;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         out = fromSystemOut(() -> bar.sellSquishee(person));
     }
 
     @Test
     void testBeforeAdvice() {
-        assertTrue("Before advice is not good enought...", out.contains("Hello"));
-        assertTrue("Before advice is not good enought...", out.contains("How are you doing?"));
+        assertTrue("Before advice is not good enough...", out.contains("Hello"));
+        assertTrue("Before advice is not good enough...", out.contains("How are you doing?"));
     }
 
     @Test
     void testAfterAdvice() {
-        assertTrue("After advice is not good enought...", out.contains("Good Bye!"));
+        assertTrue("After advice is not good enough...", out.contains("Good Bye!"));
     }
 
     @Test
@@ -49,8 +49,8 @@ class AopAspectJTest {
 
     @Test
     void testAroundAdvice() {
-        assertTrue("Around advice is not good enought...", out.contains("Hi!"));
-        assertTrue("Around advice is not good enought...", out.contains("See you!"));
+        assertTrue("Around advice is not good enough...", out.contains("Hi!"));
+        assertTrue("Around advice is not good enough...", out.contains("See you!"));
     }
 
     @Test
