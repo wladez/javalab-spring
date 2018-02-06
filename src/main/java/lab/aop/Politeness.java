@@ -4,8 +4,10 @@ import lab.model.Person;
 import lab.model.Squishee;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
+import org.springframework.stereotype.Component;
 
 @Aspect
+@Component
 public class Politeness {
 
     @Pointcut("execution(* sellSquishee(..))")
