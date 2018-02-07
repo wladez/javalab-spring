@@ -40,6 +40,7 @@ class AopAspectJTest {
     @Test
     void testAfterAdvice() {
         assertTrue("After advice is not good enought...", out.contains("Good Bye!"));
+        System.out.println(out);
     }
 
     @Test
