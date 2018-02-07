@@ -56,6 +56,10 @@ public interface Tests {
         return String.format("./src/test/resources/%s.properties", name);
     }
 
+    static String toTestSqlResourceName (String name) {
+        return String.format("./src/test/resources/%s.sql", name);
+    }
+
     static Iterable<String> toTestSqlResourceNames (String name) {
         List<String> result = new ArrayList<>();
         String sqlFilePathName;
@@ -64,19 +68,14 @@ public interface Tests {
         return result;
     }
 
-    static String toTestSqlResourceName (String name) {
-        return String.format("./src/test/resources/%s.sql", name);
-    }
-
     /**
      * @apiNote This method use some dirty hack in reflection API for making access to private field!
+     * It works even if field has final modifier!
      */
     @SneakyThrows
-    static void setValue2Field(Object o, String name, Object broke) {
-        assert o.getClass() == UsualPerson.class;
-        Field brokeField = o.getClass().getDeclaredField(name);
-//        if (!brokeField.canAccess(person))
-        brokeField.setAccessible(true);
-        brokeField.set(o, broke);
+    static void setValue2Field(Object o, String fieldName, Object newValue) {
+        Field field = o.getClass().getDeclaredField(fieldName);
+        field.setAccessible(true);
+        field.set(o, newValue);
     }
 }
