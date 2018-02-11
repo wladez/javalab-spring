@@ -7,7 +7,7 @@ public class AbstractJpaDao {
 
 	protected EntityManagerFactory emf;
 
-	@PersistenceUnit
+	@PersistenceUnit(unitName = "myPersistence")
 	public void setEntityManagerFactory(EntityManagerFactory emf) {
 		this.emf = emf;
 	}

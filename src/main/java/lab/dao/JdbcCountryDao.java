@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -39,7 +40,7 @@ public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements Coun
     public List<Country> getCountriesStartWith(String name) {
         return getNamedParameterJdbcTemplate()
                 .query(GET_COUNTRIES_BY_NAME_SQL,
-                        Map.of("name", name + "%"),
+                        Collections.singletonMap("name", name + "%"),
                         COUNTRY_ROW_MAPPER);
     }
 

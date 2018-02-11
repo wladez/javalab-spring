@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.EntityManager;
 
+import lab.model.SimpleCountry;
 import org.springframework.stereotype.Repository;
 
 import lab.dao.CountryDao;
@@ -15,7 +16,10 @@ public class CountryJpaDaoImpl extends AbstractJpaDao implements CountryDao {
 	@Override
 	public void save(Country country) {
 //		TODO: Implement it
-		EntityManager em = null;
+
+		EntityManager em = emf.createEntityManager();
+
+		em.persist(country);
 
 		if (em != null) {
 			em.close();
@@ -25,7 +29,9 @@ public class CountryJpaDaoImpl extends AbstractJpaDao implements CountryDao {
 	@Override
 	public List<Country> getCountries() {
 //	TODO: Implement it
-		return null	;
+		EntityManager em = emf.createEntityManager();
+
+		return em.createQuery("SELECT id, name, code_name FROM Country" , Country.class).getResultList();
 	}// getAllcountries()
 
 	@Override

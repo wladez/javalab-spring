@@ -5,6 +5,7 @@ import lab.model.SimpleCountry;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -22,6 +23,7 @@ class CountryDaoImplTest {
     private Country exampleCountry = new SimpleCountry(1, "Australia", "AU");
 
     @Autowired
+    @Qualifier("countryJpaDaoImpl")
     private CountryDao countryDao;
 
     @Test

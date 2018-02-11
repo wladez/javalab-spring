@@ -21,7 +21,7 @@ public class UsualPerson implements Person {
 
     @ManyToOne
     @JoinColumn(name = "country_id")
-    private Country country;
+    private SimpleCountry country;
     private int age;
     private float height;
     private boolean isProgrammer;
