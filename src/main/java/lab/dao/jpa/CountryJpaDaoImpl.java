@@ -16,36 +16,15 @@ public class CountryJpaDaoImpl extends JpaDao implements CountryDao {
 
 	@Override
 	public Country save(Country country) {
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
-
-		em.merge(country);
-
-		transaction.commit();
-
-		if (em != null)
-			em.close();
-
-		return country;
+	    return mapEntityManagerInTransaction(entityManager ->
+                entityManager.merge(country));
 	}
 
 	@Override
 	public List<Country> getCountries() {
-        EntityManager em = emf.createEntityManager();
-        EntityTransaction transaction = em.getTransaction();
-        transaction.begin();
-
-        List<Country> countries = em.createQuery(
+	    return mapEntityManager(entityManager -> entityManager.createQuery(
                 "select c from SimpleCountry c", Country.class)
-                .getResultList();
-
-        transaction.commit();
-
-        if (em != null)
-            em.close();
-
-        return countries;
+                .getResultList());
 	}
 
 	@Override
