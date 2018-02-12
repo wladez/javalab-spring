@@ -26,10 +26,13 @@ class CountryDaoImplTest {
     @Qualifier("countryJpaDaoImpl")
     private CountryDao countryDao;
 
+    private int size;
+
     @Test
     void testSaveCountry() {
 
         countryDao.save(exampleCountry);
+        size++;
 
         List<Country> countryList = countryDao.getCountries();
         assertEquals(1, countryList.size());
@@ -40,13 +43,17 @@ class CountryDaoImplTest {
     void testGtAllCountries() {
 
         countryDao.save(new SimpleCountry(1, "Canada", "CA"));
+        size++;
 
         List<Country> countryList = countryDao.getCountries();
-        assertEquals(2, countryList.size());
+        assertEquals(size, countryList.size());
     }
 
     @Test
     void testGetCountryByName() throws CountryNotFoundException {
+        countryDao.save(exampleCountry);
+        size++;
+
         Country country = countryDao.getCountryByName("Australia");
         assertEquals(exampleCountry, country);
     }

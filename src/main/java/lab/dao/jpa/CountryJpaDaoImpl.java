@@ -3,8 +3,8 @@ package lab.dao.jpa;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
-import lab.model.SimpleCountry;
 import org.springframework.stereotype.Repository;
 
 import lab.dao.CountryDao;
@@ -15,11 +15,13 @@ public class CountryJpaDaoImpl extends AbstractJpaDao implements CountryDao {
 
 	@Override
 	public void save(Country country) {
-//		TODO: Implement it
-
 		EntityManager em = emf.createEntityManager();
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
 
-		em.persist(country);
+        em.merge(country);
+
+		transaction.commit();
 
 		if (em != null) {
 			em.close();
@@ -28,11 +30,20 @@ public class CountryJpaDaoImpl extends AbstractJpaDao implements CountryDao {
 
 	@Override
 	public List<Country> getCountries() {
-//	TODO: Implement it
 		EntityManager em = emf.createEntityManager();
+		EntityTransaction transaction = em.getTransaction();
 
-		return em.createQuery("SELECT id, name, code_name FROM Country" , Country.class).getResultList();
-	}// getAllcountries()
+		transaction.begin();
+		List<Country> countries = em.createQuery("SELECT c FROM SimpleCountry c" , Country.class)
+                .getResultList();
+
+		transaction.commit();
+
+        if (em != null) {
+            em.close();
+        }
+        return countries;
+	}
 
 	@Override
 	public List<Country> getCountriesStartWith(String name) {
@@ -56,9 +67,17 @@ public class CountryJpaDaoImpl extends AbstractJpaDao implements CountryDao {
 
 	@Override
 	public Country getCountryByName(String name) {
-//		TODO: Implement it
+        EntityManager em = emf.createEntityManager();
 
-		return null;
+	    Country country = em.createQuery("SELECT c FROM SimpleCountry c WHERE c.name LIKE :name",
+                        Country.class).setParameter("name", name)
+                .getSingleResult();
+
+        if (em != null) {
+            em.close();
+        }
+
+        return country;
 	}
 
 }
