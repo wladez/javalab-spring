@@ -3,30 +3,50 @@ package lab.dao.jpa;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 
+import lab.model.SimpleCountry;
 import org.springframework.stereotype.Repository;
 
 import lab.dao.CountryDao;
 import lab.model.Country;
 
-@Repository
-public class CountryJpaDaoImpl extends AbstractJpaDao implements CountryDao {
+@Repository("countryDao")
+public class CountryJpaDaoImpl extends JpaDao implements CountryDao {
 
 	@Override
-	public void save(Country country) {
-//		TODO: Implement it
-		EntityManager em = null;
+	public Country save(Country country) {
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction transaction = em.getTransaction();
+		transaction.begin();
 
-		if (em != null) {
+		em.merge(country);
+
+		transaction.commit();
+
+		if (em != null)
 			em.close();
-		}
+
+		return country;
 	}
 
 	@Override
 	public List<Country> getCountries() {
-//	TODO: Implement it
-		return null	;
-	}// getAllcountries()
+        EntityManager em = emf.createEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        transaction.begin();
+
+        List<Country> countries = em.createQuery(
+                "select c from SimpleCountry c", Country.class)
+                .getResultList();
+
+        transaction.commit();
+
+        if (em != null)
+            em.close();
+
+        return countries;
+	}
 
 	@Override
 	public List<Country> getCountriesStartWith(String name) {
