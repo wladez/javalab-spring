@@ -2,9 +2,11 @@ import lab.dao.CountryDao;
 import lab.dao.CountryNotFoundException;
 import lab.model.Country;
 import lab.model.SimpleCountry;
+import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -24,10 +26,12 @@ class CountryDaoImplTest {
     @Autowired
     private CountryDao countryDao;
 
+    private int size;
+
     @Test
     void testSaveCountry() {
-
         countryDao.save(exampleCountry);
+        size++;
 
         List<Country> countries = countryDao.getCountries();
         assertEquals(1, countries.size());
@@ -36,17 +40,17 @@ class CountryDaoImplTest {
 
     @Test
     void testGtAllCountries() {
-
         countryDao.save(new SimpleCountry(1L, "Canada", "CA"));
+        size++;
 
-        List<Country> countryList = countryDao.getCountries();
-        assertEquals(2, countryList.size());
+        assertEquals(size, countryDao.getCountries().size());
     }
 
     @Test
     void testGetCountryByName() throws CountryNotFoundException {
-        Country country = countryDao.getCountryByName("Australia");
-        assertEquals(exampleCountry, country);
-    }
+        countryDao.save(exampleCountry);
+        size++;
 
+        assertEquals(exampleCountry, countryDao.getCountryByName(exampleCountry.getName()));
+    }
 }
