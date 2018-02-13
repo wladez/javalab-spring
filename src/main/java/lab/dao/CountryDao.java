@@ -1,7 +1,6 @@
 package lab.dao;
 
 import lab.model.Country;
-import org.springframework.beans.factory.InitializingBean;
 
 import java.util.List;
 
@@ -32,5 +31,5 @@ public interface CountryDao {
 
     Country getCountryByName(String name) throws CountryNotFoundException;
 
-    void save(Country country);
+    Country save(Country country);
 }

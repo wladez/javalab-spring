@@ -1,24 +1,24 @@
 package lab.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import lombok.experimental.Wither;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Data
 @Entity
-@Table(name = "COUNTRY")
+@Table(name = "Country")
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 public class SimpleCountry implements Country {
+
     @Id
+    @Wither
     @GeneratedValue
-    private int id;
-
-    @Column
+    private Long id;
     private String name;
-
-    @Column(name = "code_name")
     private String codeName;
 }

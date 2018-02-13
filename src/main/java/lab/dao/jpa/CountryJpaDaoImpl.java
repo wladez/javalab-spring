@@ -1,83 +1,56 @@
 package lab.dao.jpa;
 
-import java.util.List;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
-
-import org.springframework.stereotype.Repository;
-
 import lab.dao.CountryDao;
 import lab.model.Country;
+import org.springframework.stereotype.Repository;
 
-@Repository
-public class CountryJpaDaoImpl extends AbstractJpaDao implements CountryDao {
+import java.util.List;
 
-	@Override
-	public void save(Country country) {
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
+@Repository("countryDao")
+public class CountryJpaDaoImpl extends JpaDao implements CountryDao {
 
-        em.merge(country);
+    @Override
+    public Country save(Country country) {
+        return mapEntityManagerInTransaction(entityManager ->
+                entityManager.merge(country));
+    }
 
-		transaction.commit();
+    @Override
+    public List<Country> getCountries() {
+        return mapEntityManager(entityManager -> entityManager.createQuery(
+                "select c from SimpleCountry c", Country.class)
+                .getResultList());
+    }
 
-		if (em != null) {
-			em.close();
-		}
-	}
+    @Override
+    public List<Country> getCountriesStartWith(String name) {
+        return null;
+    }
 
-	@Override
-	public List<Country> getCountries() {
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction transaction = em.getTransaction();
+    @Override
+    public void updateCountryName(String codeName, String newCountryName) {
 
-		transaction.begin();
-		List<Country> countries = em.createQuery("SELECT c FROM SimpleCountry c" , Country.class)
-                .getResultList();
+    }
 
-		transaction.commit();
+    @Override
+    public void loadCountries() {
 
-        if (em != null) {
-            em.close();
-        }
-        return countries;
-	}
+    }
 
-	@Override
-	public List<Country> getCountriesStartWith(String name) {
-		return null;
-	}
+    @Override
+    public Country getCountryByCodeName(String codeName) {
+        return null;
+    }
 
-	@Override
-	public void updateCountryName(String codeName, String newCountryName) {
-
-	}
-
-	@Override
-	public void loadCountries() {
-
-	}
-
-	@Override
-	public Country getCountryByCodeName(String codeName) {
-		return null;
-	}
-
-	@Override
-	public Country getCountryByName(String name) {
-        EntityManager em = emf.createEntityManager();
-
-	    Country country = em.createQuery("SELECT c FROM SimpleCountry c WHERE c.name LIKE :name",
-                        Country.class).setParameter("name", name)
-                .getSingleResult();
-
-        if (em != null) {
-            em.close();
-        }
-
-        return country;
-	}
+    @Override
+    public Country getCountryByName(String name) {
+        return mapEntityManager(entityManager ->
+                entityManager
+                        .createQuery(
+                                "select c from SimpleCountry c where c.name like :name",
+                                Country.class)
+                        .setParameter("name", name)
+                        .getSingleResult());
+    }
 
 }

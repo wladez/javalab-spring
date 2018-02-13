@@ -59,7 +59,6 @@ dependencies {
             'org.springframework:spring-test:+'
 
     testRuntime 'org.junit.jupiter:junit-jupiter-engine:+',
-            // H2
             'com.h2database:h2:+'
 
     // To avoid compiler warnings about @API annotations in JUnit code

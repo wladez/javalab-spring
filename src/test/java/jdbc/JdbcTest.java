@@ -26,7 +26,7 @@ public class JdbcTest{
 	
     private List<Country> expectedCountryList = new ArrayList<>();
     private List<Country> expectedCountryListStartsWithA = new ArrayList<>();
-    private Country countryWithChangedName = new SimpleCountry(8, "Russia", "RU");
+    private Country countryWithChangedName = new SimpleCountry(8L, "Russia", "RU");
 
     @BeforeEach
     void setUp() {
@@ -67,7 +67,7 @@ public class JdbcTest{
     private void initExpectedCountryLists() {
          for (int i = 0; i < CountryDao.COUNTRY_INIT_DATA.length;) {
              String[] countryInitData = CountryDao.COUNTRY_INIT_DATA[i++];
-             Country country = new SimpleCountry(i, countryInitData[0], countryInitData[1]);
+             Country country = new SimpleCountry((long) i, countryInitData[0], countryInitData[1]);
              expectedCountryList.add(country);
              if (country.getName().startsWith("A")) {
                  expectedCountryListStartsWithA.add(country);
