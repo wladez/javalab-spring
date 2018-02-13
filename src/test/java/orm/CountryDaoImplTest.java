@@ -1,12 +1,12 @@
+package orm;
+
 import lab.dao.CountryDao;
 import lab.dao.CountryNotFoundException;
 import lab.model.Country;
 import lab.model.SimpleCountry;
-import lombok.Data;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
