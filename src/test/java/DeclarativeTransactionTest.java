@@ -18,7 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @AllArgsConstructor(onConstructor = @__(@Autowired))
 class DeclarativeTransactionTest extends JdbcTest {
 
-	private CountryService countryService;
+	@Autowired
+    private CountryService countryService;
 
     @Test
     @DirtiesContext
