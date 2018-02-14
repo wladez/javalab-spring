@@ -18,17 +18,11 @@ import java.util.Map;
 @Repository
 public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements CountryDao {
 
-    //language=h2
     private static final String SAVE_COUNTRY_SQL = "INSERT INTO country (name, code_name) VALUES (?, ?)";
-    //language=h2
     private static final String GET_ALL_COUNTRIES_SQL = "SELECT id, name, code_name FROM country";
-    //language=h2
     private static final String GET_COUNTRIES_BY_NAME_SQL = "SELECT id, name, code_name FROM country WHERE name LIKE :name";
-    //language=h2
     private static final String GET_COUNTRY_BY_NAME_SQL = "SELECT id, name, code_name FROM country WHERE name = '%s'";
-    //language=h2
     private static final String GET_COUNTRY_BY_CODE_NAME_SQL = "SELECT id, name, code_name FROM country WHERE code_name = '%s'";
-    //language=h2
     private static final String UPDATE_COUNTRY_NAME_SQL = "UPDATE country SET name='%s' WHERE code_name='%s'";
 
     private static final RowMapper<Country> COUNTRY_ROW_MAPPER = (resultSet, i) ->
@@ -59,8 +53,7 @@ public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements Coun
     @Override
     public void loadCountries() {
         for (String[] countryData : COUNTRY_INIT_DATA) {
-            getJdbcTemplate().execute(
-                    String.format(SAVE_COUNTRY_SQL, countryData[0], countryData[1]));
+            save(countryData[0], countryData[1]);
         }
     }
 
