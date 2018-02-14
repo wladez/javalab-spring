@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 public class SimpleContact implements Contact {
-    private String type;
-    private String value;
+    String type;
+    String value;
 }
