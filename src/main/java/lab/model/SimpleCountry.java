@@ -1,12 +1,17 @@
 package lab.model;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.NonFinal;
 import lombok.experimental.Wither;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import static lombok.AccessLevel.PRIVATE;
 
 @Data
 @Entity
@@ -16,9 +21,10 @@ import javax.persistence.Table;
 public class SimpleCountry implements Country {
 
     @Id
-    @Wither
     @GeneratedValue
-    private Long id;
-    private String name;
-    private String codeName;
+    Long id;
+
+    String name;
+
+    String codeName;
 }

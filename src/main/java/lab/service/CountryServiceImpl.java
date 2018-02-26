@@ -2,25 +2,30 @@ package lab.service;
 
 import lab.dao.CountryDao;
 import lab.model.Country;
+import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-//@Repository is more convenient declaration for such a class than general @Service
-@Repository
-@Transactional
-@AllArgsConstructor
+import static lombok.AccessLevel.PRIVATE;
+import static org.springframework.transaction.annotation.Propagation.*;
+
+@Repository // is more convenient declaration for such a class than general @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
 public class CountryServiceImpl implements CountryService {
 
-	private CountryDao jdbcCountryDao;
+	@SuppressWarnings("WeakerAccess")
+	CountryDao jdbcCountryDao;
 
 	public List<Country> getAllCountriesInsideTransaction(Propagation propagation) {
 
-		if (Propagation.REQUIRED.equals(propagation)) {
+		if (REQUIRED.equals(propagation)) {
 			return getAllCountriesRequired();
 		} else if (Propagation.REQUIRES_NEW.equals(propagation)) {
 			return getAllCountriesRequiresNew();
@@ -37,46 +42,38 @@ public class CountryServiceImpl implements CountryService {
 		}
 	}
 
-	@Transactional(propagation = Propagation.REQUIRED)
+	@Transactional(propagation = REQUIRED)
 	public List<Country> getAllCountriesRequired() {
 		return jdbcCountryDao.getCountries();
 	}
 
-	@Transactional(propagation = Propagation.REQUIRES_NEW)
+	@Transactional(propagation = REQUIRES_NEW)
 	public List<Country> getAllCountriesRequiresNew() {
 		return jdbcCountryDao.getCountries();
 	}
 
-	@Transactional(propagation = Propagation.SUPPORTS)
+	@Transactional(propagation = SUPPORTS)
 	public List<Country> getAllCountriesSupports() {
 		return jdbcCountryDao.getCountries();
 	}
 
-	@Transactional(propagation = Propagation.NEVER)
+	@Transactional(propagation = NEVER)
 	public List<Country> getAllCountriesNever() {
 		return jdbcCountryDao.getCountries();
 	}
 
-	@Transactional(propagation = Propagation.MANDATORY)
+	@Transactional(propagation = MANDATORY)
 	public List<Country> getAllCountriesMandatory() {
 		return jdbcCountryDao.getCountries();
 	}
 
-	@Transactional(propagation = Propagation.NOT_SUPPORTED)
+	@Transactional(propagation = NOT_SUPPORTED)
 	public List<Country> getAllCountriesNotSupported() {
 		return jdbcCountryDao.getCountries();
 	}
 
 	public List<Country> getAllCountries() {
 		return jdbcCountryDao.getCountries();
-	}
-
-	public CountryDao getJdbcCountryDao() {
-		return jdbcCountryDao;
-	}
-
-	public void setJdbcCountryDao(CountryDao jdbcCountryDao) {
-		this.jdbcCountryDao = jdbcCountryDao;
 	}
 
 }

@@ -1,39 +1,43 @@
 package lab.model;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 import lombok.experimental.Wither;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.List;
+
+import static lombok.AccessLevel.PRIVATE;
 
 @Data
 @Entity
 @Table(name = "person")
 @Builder
 @NoArgsConstructor
-@AllArgsConstructor
+@AllArgsConstructor(onConstructor = @__(@Autowired))
 @Component("person")
 public class UsualPerson implements Person {
 
     @Id
     @GeneratedValue
-    private int id;
+    int id;
 
-    private String firstName;
-    private String lastName;
+    String firstName;
+    String lastName;
 
     @ManyToOne
     @JoinColumn(name = "country_id")
-    private SimpleCountry country;
-    private int age;
-    private float height;
-    private boolean isProgrammer;
+    SimpleCountry country;
+    int age;
+    float height;
+    boolean isProgrammer;
 
     @Wither
-    private boolean isBroke;
+    boolean isBroke;
 
     @OneToMany
     @Singular
-    private List<Contact> contacts;
+    List<Contact> contacts;
 }

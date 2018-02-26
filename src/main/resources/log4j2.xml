@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--https://github.com/merceneryinbox/javalab-spring/blob/master/src/test/resources/log4j2.xml-->
 <Configuration status="WARN">
     <Appenders>
         <Console name="Console" target="SYSTEM_OUT">
@@ -16,7 +17,9 @@
     </Appenders>
     <Loggers>
         <Root level="info">
+        <!--<Root level="warn">-->
         <!--<Root level="trace">-->
+        <!--<Root level="debug">-->
             <AppenderRef ref="Console"/>
             <AppenderRef ref="FileLogger" level="DEBUG"/>
         </Root>

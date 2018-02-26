@@ -2,7 +2,6 @@ package lab.dao;
 
 import lab.model.Country;
 import lab.model.SimpleCountry;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -15,20 +14,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
+
 @Repository
 public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements CountryDao {
 
-    //language=h2
     private static final String SAVE_COUNTRY_SQL = "INSERT INTO country (name, code_name) VALUES (?, ?)";
-    //language=h2
     private static final String GET_ALL_COUNTRIES_SQL = "SELECT id, name, code_name FROM country";
-    //language=h2
     private static final String GET_COUNTRIES_BY_NAME_SQL = "SELECT id, name, code_name FROM country WHERE name LIKE :name";
-    //language=h2
     private static final String GET_COUNTRY_BY_NAME_SQL = "SELECT id, name, code_name FROM country WHERE name = '%s'";
-    //language=h2
     private static final String GET_COUNTRY_BY_CODE_NAME_SQL = "SELECT id, name, code_name FROM country WHERE code_name = '%s'";
-    //language=h2
     private static final String UPDATE_COUNTRY_NAME_SQL = "UPDATE country SET name='%s' WHERE code_name='%s'";
 
     private static final RowMapper<Country> COUNTRY_ROW_MAPPER = (resultSet, i) ->
@@ -58,37 +53,33 @@ public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements Coun
 
     @Override
     public void loadCountries() {
-        for (String[] countryData : COUNTRY_INIT_DATA) {
-            getJdbcTemplate().execute(
-                    String.format(SAVE_COUNTRY_SQL, countryData[0], countryData[1]));
-        }
+        for (String[] countryData : COUNTRY_INIT_DATA)
+            save(countryData[0], countryData[1]);
     }
 
     @Override
     public Country getCountryByCodeName(String codeName) {
-        JdbcTemplate jdbcTemplate = getJdbcTemplate();
-
         String sql = String.format(GET_COUNTRY_BY_CODE_NAME_SQL, codeName);
-
-        return jdbcTemplate.query(sql, COUNTRY_ROW_MAPPER).get(0);
+        return getJdbcTemplate().query(sql, COUNTRY_ROW_MAPPER).get(0);
     }
 
     @Override
-    public Country getCountryByName(String name)
-            throws CountryNotFoundException {
-        JdbcTemplate jdbcTemplate = getJdbcTemplate();
-        List<Country> countryList = jdbcTemplate.query(
-                String.format(GET_COUNTRY_BY_NAME_SQL, name), COUNTRY_ROW_MAPPER);
-        if (countryList.isEmpty()) {
+    public Country getCountryByName(String name) throws CountryNotFoundException {
+        List<Country> countries = getJdbcTemplate().query(
+                String.format(GET_COUNTRY_BY_NAME_SQL, name),
+                COUNTRY_ROW_MAPPER);
+
+        if (countries.isEmpty())
             throw new CountryNotFoundException();
-        }
-        return countryList.get(0);
+
+        return countries.get(0);
     }
 
     @Override
     public Country save(Country country) {
         assert country.getId() == null;
-        return country.withId(save(country.getName(), country.getCodeName()));
+        return country.setId(
+                save(country.getName(), country.getCodeName()));
     }
 
     public long save(String name, String codeName) {
@@ -96,7 +87,7 @@ public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements Coun
         getJdbcTemplate().update(
                 connection -> {
                     PreparedStatement ps = connection.prepareStatement(
-                            SAVE_COUNTRY_SQL, Statement.RETURN_GENERATED_KEYS);
+                            SAVE_COUNTRY_SQL, RETURN_GENERATED_KEYS);
                     ps.setString(1, name);
                     ps.setString(2, codeName);
                     return ps;
