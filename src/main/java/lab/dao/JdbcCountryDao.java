@@ -15,7 +15,7 @@ import java.util.Map;
 
 import static java.sql.Statement.RETURN_GENERATED_KEYS;
 
-@Repository
+//@Repository
 public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements CountryDao {
 
     private static final String SAVE_COUNTRY_SQL = "INSERT INTO country (name, code_name) VALUES (?, ?)";

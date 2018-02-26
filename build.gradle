@@ -40,6 +40,7 @@ dependencies {
 
             // JDBC
             'org.springframework:spring-jdbc:+',
+            'com.h2database:h2:+',
 
             // ORM
             'org.springframework:spring-orm:+',
@@ -71,8 +72,7 @@ dependencies {
             'org.mockito:mockito-core:+',
             'org.springframework:spring-test:+'
 
-    testRuntime 'org.junit.jupiter:junit-jupiter-engine:+',
-            'com.h2database:h2:+'
+    testRuntime 'org.junit.jupiter:junit-jupiter-engine:+'
 
     // To avoid compiler warnings about @API annotations in JUnit code
     testCompileOnly 'org.apiguardian:apiguardian-api:+'

@@ -17,7 +17,7 @@ import static lombok.AccessLevel.PRIVATE;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor(onConstructor = @__(@Autowired))
-@Component("person")
+//@Component("person")
 public class UsualPerson implements Person {
 
     @Id
