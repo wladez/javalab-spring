@@ -13,6 +13,8 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Map;
 
+import static java.sql.Statement.RETURN_GENERATED_KEYS;
+
 @Repository
 public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements CountryDao {
 
@@ -84,7 +86,7 @@ public class JdbcCountryDao extends NamedParameterJdbcDaoSupport implements Coun
         getJdbcTemplate().update(
                 connection -> {
                     PreparedStatement ps = connection.prepareStatement(
-                            SAVE_COUNTRY_SQL, Statement.RETURN_GENERATED_KEYS);
+                            SAVE_COUNTRY_SQL, RETURN_GENERATED_KEYS);
                     ps.setString(1, name);
                     ps.setString(2, codeName);
                     return ps;

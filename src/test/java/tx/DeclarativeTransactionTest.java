@@ -1,6 +1,9 @@
+package tx;
+
 import jdbc.JdbcTest;
 import lab.dao.CountryDao;
 import lab.service.CountryService;
+import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +18,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration("classpath:tx.xml")
-class DeclarativeTransactionTest extends JdbcTest {
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+class DeclarativeTransactionTest {
 
-    @Autowired
-    public DeclarativeTransactionTest(CountryDao jdbcCountryDao, CountryService countryService) {
-        super(jdbcCountryDao);
-        this.countryService = countryService;
-    }
-
+    @SuppressWarnings("WeakerAccess")
     CountryService countryService;
 
     @Test
